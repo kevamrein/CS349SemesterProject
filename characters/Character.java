@@ -1,34 +1,40 @@
 package characters;
-import physics.*;
-import visual.dynamic.described.DescribedSprite;
+import java.awt.Graphics;
 
-public abstract class Character extends DescribedSprite implements Moveable, Drawable {
+import physics.*;
+import visual.dynamic.described.AbstractSprite;
+import visual.statik.SimpleContent;
+
+public abstract class Character extends AbstractSprite {
 	private Location location;
 	private Vector vector;
 	private boolean destroyed;
 	
-	public Character (Location location, Vector vector) {
+	public Character (int xPosition, int yPosition, Vector vector) {
 		super();
-		this.location = location;
+		super.x = xPosition;
+		super.y = yPosition;
 		this.vector = vector;
 		this.destroyed = false;
 	}
-	
 	public void destroy() {
 		this.destroyed = true;
 	}
-
-	/* Getters and Setters */
 	
-	public Location getLocation() {
-		return location;
-	}
-
-	public Vector getVector() {
-		return vector;
+	public void setX(int x) {
+		super.x = x;
 	}
 	
-	public boolean getDestroyed() {
-		return this.destroyed;
+	public void setY(int y) {
+		super.y = y;
 	}
+	
+	public int getX() {
+		return (int) super.x;
+	}
+	
+	public int getY() {
+		return (int) super.y;
+	}
+	
 }

@@ -3,6 +3,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 
 import app.MultimediaApplication;
+import utilities.Constants;
 
 /**
  * Starts a PossibleGameApplication using the MovieApp.
@@ -13,7 +14,7 @@ import app.MultimediaApplication;
 public class PossibleGameApplication extends MultimediaApplication {
 	
 	public static void main (String[] args) throws InvocationTargetException, InterruptedException {
-		SwingUtilities.invokeAndWait(new PossibleGameApplication(args, 500, 600));
+		SwingUtilities.invokeAndWait(new PossibleGameApplication(args, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT));
 	}
 	
 	/**
