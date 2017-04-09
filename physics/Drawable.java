@@ -1,0 +1,5 @@
+package physics;
+
+public interface Drawable {
+	public void draw();
+}
