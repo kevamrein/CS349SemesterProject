@@ -58,14 +58,14 @@ public class Player extends Character {
 	public void handleTick(int arg0) {
 		if (jumping) {
 			if (!wasMax && moveCount > 0) {
-				super.y--;
-				moveCount++;
-				if (moveCount == NUM_TO_MOVE) {
+				super.y-=3;
+				moveCount+=3;
+				if (moveCount >= NUM_TO_MOVE) {
 					wasMax = true;
 				}
 			} else if (wasMax && moveCount > 0) {
-				super.y++;
-				moveCount--;
+				super.y+=3;
+				moveCount-=3;
 			} else if (moveCount <= 0) {
 				endJumping();
 			}

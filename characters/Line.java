@@ -19,7 +19,7 @@ public class Line extends AbstractSprite {
 	public void render(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		g2.setColor(Color.black);
+		g2.setColor(Color.orange);
 		
 		g2.drawLine(X1, Constants.LINE_Y, Constants.SCREEN_WIDTH, Constants.LINE_Y);
 	}
