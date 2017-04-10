@@ -5,6 +5,8 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
+import Title.EntryScreen;
+import Title.ExitScreen;
 import app.AbstractMultimediaApp;
 import characters.Enemy;
 import characters.Line;
@@ -16,16 +18,21 @@ import visual.Visualization;
 import visual.VisualizationView;
 import visual.dynamic.described.Stage;
 
+
 public class PossibleGameApp extends AbstractMultimediaApp implements KeyListener, MetronomeListener {
 	private JPanel contentPane;
 	private Player player;
 	private Stage visualization;
 	private VisualizationView view;
+	private EntryScreen entryscreen;
+	private ExitScreen exitscreen;
 	
 	public void init() {
 		contentPane = (JPanel)rootPaneContainer.getContentPane();
 		contentPane.setLayout(null);
 		
+		entryscreen = new EntryScreen();
+	    exitscreen = new ExitScreen(10);
 	}
 	
 	private void playGame() {
@@ -90,6 +97,4 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 		visualization.add(enemy);
 	}
 	
-	
-
 }
