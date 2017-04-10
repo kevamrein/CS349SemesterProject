@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm *.class
+rm application/*.class
 rm characters/*.class
 rm io/*.class
 rm physics/*.class

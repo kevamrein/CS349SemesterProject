@@ -1,3 +1,4 @@
+package application;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -31,11 +32,14 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 		contentPane = (JPanel)rootPaneContainer.getContentPane();
 		contentPane.setLayout(null);
 		
-		entryscreen = new EntryScreen();
+		entryscreen = new EntryScreen(this);
+		
+		contentPane.add(entryscreen);
 	    exitscreen = new ExitScreen(10);
 	}
 	
-	private void playGame() {
+	public void playGame() {
+		contentPane.removeAll();
 		Metronome metronome = new Metronome(1400);
 //		Metronome newMetronome = new Metronome(20);
 		visualization = new Stage(15);

@@ -22,7 +22,6 @@ public class Enemy extends Character {
 		triangle = new Polygon(xPositions, yPositions, 3);
 		Random rand = new Random();
 		speed = rand.nextDouble() * 3 + .1;
-		System.out.println(speed);
 	}
 
 	@Override

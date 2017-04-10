@@ -13,7 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import app.AbstractMultimediaApp;
 import app.MultimediaApplet;
+import application.PossibleGameApp;
 import io.ReadFile;
 import visual.statik.SimpleContent;
 
@@ -29,9 +31,12 @@ public class EntryScreen extends JPanel implements ActionListener {
 	private JLabel label;
 	private ReadFile reader;
 	private BufferedImage image = null;
+	private PossibleGameApp app;
 	
-	public EntryScreen() {
+	public EntryScreen(AbstractMultimediaApp app) {
 		super();
+		
+		this.app = (PossibleGameApp)app;
 		
 		setBounds(0, 0, 800, 400);
 		
@@ -39,6 +44,7 @@ public class EntryScreen extends JPanel implements ActionListener {
 		image = reader.getImage("Title.png");
 		
 		button = new JButton("Start Game");
+		button.addActionListener(this);
 		button.setBounds(300,275,200, 75);
 		
 		label = new JLabel("POSSIBLE GAME");
@@ -68,7 +74,7 @@ public class EntryScreen extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		app.playGame();
 	}
 
 }
