@@ -18,8 +18,8 @@ public class PossibleGameApp extends AbstractMultimediaApp {
 	    
 	    entryscreen = new EntryScreen();
 	    exitscreen = new ExitScreen(10);
-	    
-	    ///contentPane.add(entryscreen);
+	      
+	    //contentPane.add(entryscreen);
 	    contentPane.add(exitscreen);
 	    
 	    contentPane.repaint();
