@@ -39,11 +39,9 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 	private Stage visualization;
 	private VisualizationView view;
 	private EntryScreen entryscreen;
-	private ExitScreen exitscreen;
 	private ArrayList<Enemy> enemies;
 	private int createdEnemyCounter;
 	private int creationBuffer;
-	private int lives = 3;
 	private NumericDisplay scoreDisplay, livesDisplay;
 
 	public void init() {
@@ -53,18 +51,19 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 		entryscreen = new EntryScreen(this);
 
 		contentPane.add(entryscreen);
-		exitscreen = new ExitScreen(10);
 
+	}
+
+	public void createGameElements() {
 		// Create Enemies
 		enemies = new ArrayList<Enemy>();
 		for (int i = 0; i < ENEMY_COUNT; i++) {
 			enemies.add(new Enemy());
 		}
 		createdEnemyCounter = 0;
-		
+
 		livesDisplay = new NumericDisplay(LIVES_LABEL, STARTING_LIVES, LIVES_X, LIVES_Y);
 		scoreDisplay = new NumericDisplay(SCORE_LABEL, STARTING_SCORE, SCORE_X, SCORE_Y);
-
 	}
 
 	public void playGame() {
@@ -72,7 +71,7 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 		// Metronome newMetronome = new Metronome(20);
 		visualization = new Stage(15);
 		// Visualization visualization = new Visualization();
-		//metronome = new Metronome(1400);
+		// metronome = new Metronome(1400);
 
 		view = visualization.getView();
 		view.setBounds(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -84,18 +83,25 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 
 		player = new Player(Constants.PLAYER_START_X, Constants.PLAYER_START_Y);
 
-		//metronome.addListener(this);
+		// metronome.addListener(this);
 		visualization.getMetronome().addListener(this);
 		// newMetronome.addListener(enemy);
 
 		visualization.add(player);
-		
+
 		visualization.add(livesDisplay);
 		visualization.add(scoreDisplay);
 
 		contentPane.add(view);
-//		metronome.start();
+		// metronome.start();
 		visualization.start();
+	}
+
+	private void exit() {
+		contentPane.removeAll();
+		ExitScreen exitScreen = new ExitScreen(scoreDisplay.getValue(), this);
+		contentPane.add(exitScreen);
+		contentPane.repaint();
 	}
 
 	@Override
@@ -135,11 +141,11 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 						&& enemyCoordinates[2].getX() >= playerCoordinates[2].getX()))
 				&& enemyCoordinates[1].getY() <= playerCoordinates[2].getY();
 	}
-	
+
 	private boolean survived(Enemy enemy) {
 		Location[] playerCoordinates = player.getCoordinates();
 		Location[] enemyCoordinates = enemy.getCoordinates();
-		
+
 		return playerCoordinates[2].getX() > enemyCoordinates[2].getX();
 	}
 
@@ -152,7 +158,7 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 				createdEnemyCounter++;
 			}
 		}
-		
+
 		for (Enemy e : enemies) {
 			if (!e.isDestroyed() && hit(e)) {
 				e.destroy();
@@ -162,9 +168,9 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 				e.survived();
 			}
 		}
-		
+
 		if (livesDisplay.getValue() == 0) {
-			System.exit(0);
+			exit();
 		}
 	}
 

@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import app.AbstractMultimediaApp;
+import application.PossibleGameApp;
 import io.ReadFile;
 
 public class ExitScreen extends JPanel implements ActionListener {
@@ -20,21 +22,20 @@ public class ExitScreen extends JPanel implements ActionListener {
 	private JLabel label, label1;
 	private ReadFile reader;
 	private BufferedImage image = null;
+	PossibleGameApp app;
 	
-	private int score;
-	
-	public ExitScreen(int score) {
+	public ExitScreen(int score, AbstractMultimediaApp app) {
 		super();
-		
-		this.score = score;
-		
+
+		this.app = (PossibleGameApp) app;
 		setBounds(0, 0, 800, 400);
 		
 		reader = new ReadFile();
 		image = reader.getImage("Title.png");
 		
-		button = new JButton("HOME PAGE");
+		button = new JButton("Play Again");
 		button.setBounds(300,275,200, 75);
+		button.addActionListener(this);
 		
 		label = new JLabel("GAME OVER");
 		label.setBounds(300, 0, 350, 300);
@@ -68,8 +69,8 @@ public class ExitScreen extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		app.createGameElements();
+		app.playGame();
 	}
 
 

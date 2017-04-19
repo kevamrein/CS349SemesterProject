@@ -59,7 +59,7 @@ public class Enemy extends Character {
 	}
 
 	private void resetTriangle() {
-
+		
 		coordinates = LocationUtilities.copyArray(startingLocations);
 		speed = rand.nextDouble() * 3 + 3;
 		this.destroyed = false;

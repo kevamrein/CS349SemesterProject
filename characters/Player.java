@@ -91,7 +91,7 @@ public class Player extends Character {
 			} else if (wasMax && moveCount > 0) {
 				super.y+=3;
 				moveCount-=3;
-			} else if (moveCount <= 0) {
+			} else if (moveCount <= 10) {
 				endJumping();
 				endDoubleJump();
 			}
