@@ -13,15 +13,19 @@ import visual.statik.TransformableContent;
 public class Player extends Character {
 	public static final int PLAYER_SIZE = 50;
 	private static final int NUM_TO_MOVE = 80;
+	private static final int NUM_TO_MOVE_DOUBLE = 120;
 	
-	private boolean jumping, wasMax;
-	private int moveCount;
+	private boolean jumping, wasMax, doubleJumping;
+	private int moveCount, numToMove;
+	private Location[] coordinates; // in form: top-left, top-right, bottom-left, bottom-right
 	
-	public Player(int xPosition, int yPosition, Vector vector) {
-		super(xPosition, yPosition, vector);
+	public Player(int xPosition, int yPosition) {
+		super(xPosition, yPosition, 4);
 		jumping = false;
 		wasMax = false;
 		moveCount = 0;
+		coordinates = new Location[4];
+		setCoordinates();
 	}
 	
 	@Override
@@ -44,8 +48,28 @@ public class Player extends Character {
 		super.y = Constants.PLAYER_START_Y;
 	}
 	
+	public void startDoubleJump() {
+		doubleJumping = true;
+		wasMax = false;
+	}
+	
+	public void endDoubleJump() {
+		doubleJumping = false;
+	}
+	
 	public boolean isJumping() {
 		return this.jumping;
+	}
+	
+	public boolean isDoubleJumping() {
+		return this.doubleJumping;
+	}
+	
+	private void setCoordinates() {
+		coordinates[0] = new Location(super.x, super.y);
+		coordinates[1] = new Location(super.x + PLAYER_SIZE, super.y);
+		coordinates[2] = new Location(super.x, super.y + PLAYER_SIZE);
+		coordinates[3] = new Location(super.x + PLAYER_SIZE, super.y + PLAYER_SIZE);
 	}
 
 	@Override
@@ -57,10 +81,11 @@ public class Player extends Character {
 	@Override
 	public void handleTick(int arg0) {
 		if (jumping) {
+			numToMove = doubleJumping ? NUM_TO_MOVE_DOUBLE : NUM_TO_MOVE;
 			if (!wasMax && moveCount > 0) {
 				super.y-=3;
 				moveCount+=3;
-				if (moveCount >= NUM_TO_MOVE) {
+				if (moveCount >= numToMove) {
 					wasMax = true;
 				}
 			} else if (wasMax && moveCount > 0) {
@@ -68,8 +93,13 @@ public class Player extends Character {
 				moveCount-=3;
 			} else if (moveCount <= 0) {
 				endJumping();
+				endDoubleJump();
 			}
 		}
-		
+		setCoordinates();
+	}
+	
+	public Location[] getCoordinates() {
+		return this.coordinates;
 	}
 }

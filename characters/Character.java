@@ -7,18 +7,22 @@ import visual.statik.SimpleContent;
 
 public abstract class Character extends AbstractSprite {
 	private Location location;
-	private Vector vector;
-	private boolean destroyed;
+	protected Location[] coordinates;
+	protected boolean destroyed;
 	
-	public Character (int xPosition, int yPosition, Vector vector) {
+	public Character (int xPosition, int yPosition, int pointCount) {
 		super();
 		super.x = xPosition;
 		super.y = yPosition;
-		this.vector = vector;
+		coordinates = new Location[pointCount];
 		this.destroyed = false;
 	}
 	public void destroy() {
 		this.destroyed = true;
+	}
+	
+	public boolean isDestroyed() {
+		return this.destroyed;
 	}
 	
 	public void setX(int x) {
@@ -35,6 +39,10 @@ public abstract class Character extends AbstractSprite {
 	
 	public int getY() {
 		return (int) super.y;
+	}
+	
+	public Location[] getCoordinates() {
+		return this.coordinates;
 	}
 	
 }

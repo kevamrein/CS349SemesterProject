@@ -15,6 +15,11 @@ public class Location {
 		this.yPosition = yPosition;
 	}
 	
+	public Location (Location location) {
+		this.xPosition = location.xPosition;
+		this.yPosition = location.yPosition;
+	}
+	
 	public double getX() {
 		return this.xPosition;
 	}
@@ -29,5 +34,9 @@ public class Location {
 	
 	public void setY(double yPosition) {
 		this.yPosition = yPosition;
+	}
+	
+	public String toString() {
+		return String.format("(%.1f, %.1f)", xPosition, yPosition);
 	}
 }
