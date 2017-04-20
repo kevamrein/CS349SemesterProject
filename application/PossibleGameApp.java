@@ -81,6 +81,10 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 
 		livesDisplay = new NumericDisplay(LIVES_LABEL, STARTING_LIVES, LIVES_X, LIVES_Y);
 		scoreDisplay = new NumericDisplay(SCORE_LABEL, STARTING_SCORE, SCORE_X, SCORE_Y);
+		
+		player = new Player(Constants.PLAYER_START_X, Constants.PLAYER_START_Y);
+		
+		player.changeColor(livesDisplay.getValue());
 	}
 
 	public void playGame() {
@@ -97,8 +101,6 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 		Line l = new Line();
 
 		visualization.add(l);
-
-		player = new Player(Constants.PLAYER_START_X, Constants.PLAYER_START_Y);
 
 		// metronome.addListener(this);
 		visualization.getMetronome().addListener(this);
@@ -180,6 +182,7 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 			if (!e.isDestroyed() && hit(e)) {
 				e.destroy();
 				livesDisplay.decrement();
+				player.changeColor(livesDisplay.getValue());
 			} else if (!e.isDestroyed() && survived(e) && !e.getSurvived()) {
 				scoreDisplay.increment();
 				e.survived();
@@ -190,5 +193,4 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 			exit();
 		}
 	}
-
 }
