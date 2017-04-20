@@ -46,7 +46,6 @@ public class Enemy extends Character {
 		for (int i = 0; i < 3; i++) {
 			double x = coordinates[i].getX();
 			x -= speed;
-			//x -= 1;
 			coordinates[i].setX(x);
 		}
 

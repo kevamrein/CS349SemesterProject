@@ -4,8 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.JPanel;
 
 import Title.EntryScreen;
@@ -17,6 +22,7 @@ import characters.NumericDisplay;
 import characters.Player;
 import event.Metronome;
 import event.MetronomeListener;
+import io.ReadFile;
 import physics.Location;
 import utilities.Constants;
 import visual.Visualization;
@@ -45,12 +51,23 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 	private NumericDisplay scoreDisplay, livesDisplay;
 
 	public void init() {
+		
+	
+		AudioInputStream stream;
+		Clip clip = null;
+		ReadFile read = new ReadFile();
+		
 		contentPane = (JPanel) rootPaneContainer.getContentPane();
 		contentPane.setLayout(null);
 
 		entryscreen = new EntryScreen(this);
 
 		contentPane.add(entryscreen);
+		
+		clip = read.getAudio("Music.wav");
+		
+		clip.loop(Clip.LOOP_CONTINUOUSLY);
+		clip.start();
 
 	}
 
