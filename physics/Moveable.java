@@ -1,6 +1,8 @@
 package physics;
 
-public interface Moveable {
-	public void move();
-	public void update();
+public interface Moveable
+{
+  public void move();
+
+  public void update();
 }

@@ -1,5 +1,6 @@
 package physics;
 
-public interface Drawable {
-	public void draw();
+public interface Drawable
+{
+  public void draw();
 }
