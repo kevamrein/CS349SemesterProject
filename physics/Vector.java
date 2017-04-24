@@ -6,28 +6,34 @@ package physics;
  * @author Kevin Amrein and Affan Sheikh
  *
  */
-public class Vector {
-	private double magnitude;
-	private double direction;
-	
-	public Vector(double magnitude, double direction) {
-		this.magnitude = magnitude;
-		this.direction = direction;
-	}
+public class Vector
+{
+  private double magnitude;
+  private double direction;
 
-	public double getMagnitude() {
-		return magnitude;
-	}
+  public Vector(double magnitude, double direction)
+  {
+    this.magnitude = magnitude;
+    this.direction = direction;
+  }
 
-	public void setMagnitude(double magnitude) {
-		this.magnitude = magnitude;
-	}
+  public double getMagnitude()
+  {
+    return magnitude;
+  }
 
-	public double getDirection() {
-		return direction;
-	}
+  public void setMagnitude(double magnitude)
+  {
+    this.magnitude = magnitude;
+  }
 
-	public void setDirection(double direction) {
-		this.direction = direction;
-	}
+  public double getDirection()
+  {
+    return direction;
+  }
+
+  public void setDirection(double direction)
+  {
+    this.direction = direction;
+  }
 }

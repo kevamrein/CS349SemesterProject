@@ -51,24 +51,35 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 	private NumericDisplay scoreDisplay, livesDisplay;
 
 	public void init() {
-		
-	
-		AudioInputStream stream;
-		Clip clip = null;
-		ReadFile read = new ReadFile();
-		
+
+		constructClip("Music.wav", true);
+
 		contentPane = (JPanel) rootPaneContainer.getContentPane();
 		contentPane.setLayout(null);
 
 		entryscreen = new EntryScreen(this);
 
 		contentPane.add(entryscreen);
-		
-		clip = read.getAudio("Music.wav");
-		
-		clip.loop(Clip.LOOP_CONTINUOUSLY);
-		clip.start();
 
+	}
+
+	/**
+	 * Responsible for starting the audio file
+	 * 
+	 * @param name
+	 *            the name of the .wav file
+	 * @param loop
+	 *            boolean to decide if clip should loop
+	 */
+	public void constructClip(String name, boolean loop) {
+		Clip clip = null;
+		ReadFile read = new ReadFile();
+
+		clip = read.getAudio(name);
+
+		if (loop)
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
+		clip.start();
 	}
 
 	public void createGameElements() {
@@ -78,17 +89,22 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 			enemies.add(new Enemy());
 		}
 		createdEnemyCounter = 0;
+		
+		creationBuffer = 0;
 
 		livesDisplay = new NumericDisplay(LIVES_LABEL, STARTING_LIVES, LIVES_X, LIVES_Y);
 		scoreDisplay = new NumericDisplay(SCORE_LABEL, STARTING_SCORE, SCORE_X, SCORE_Y);
-		
+
 		player = new Player(Constants.PLAYER_START_X, Constants.PLAYER_START_Y);
-		
+
 		player.changeColor(livesDisplay.getValue());
 	}
 
 	public void playGame() {
 		contentPane.removeAll();
+		// BackGround g = new BackGround(this);
+		// contentPane.add(g);
+		// contentPane.add(image);
 		// Metronome newMetronome = new Metronome(20);
 		visualization = new Stage(15);
 		// Visualization visualization = new Visualization();
@@ -97,6 +113,7 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 		view = visualization.getView();
 		view.setBounds(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 		view.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+		// view.add(g);
 		view.addKeyListener(this);
 		Line l = new Line();
 
@@ -105,12 +122,11 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 		// metronome.addListener(this);
 		visualization.getMetronome().addListener(this);
 		// newMetronome.addListener(enemy);
-
 		visualization.add(player);
 
 		visualization.add(livesDisplay);
 		visualization.add(scoreDisplay);
-
+		// contentPane.add(g);
 		contentPane.add(view);
 		// metronome.start();
 		visualization.start();
@@ -181,6 +197,8 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 		for (Enemy e : enemies) {
 			if (!e.isDestroyed() && hit(e)) {
 				e.destroy();
+				if (livesDisplay.getValue() > 0)
+					constructClip("hit.wav", false);
 				livesDisplay.decrement();
 				player.changeColor(livesDisplay.getValue());
 			} else if (!e.isDestroyed() && survived(e) && !e.getSurvived()) {
