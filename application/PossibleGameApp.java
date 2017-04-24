@@ -1,16 +1,10 @@
 package application;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
 import javax.swing.JPanel;
 
 import Title.EntryScreen;
@@ -20,16 +14,23 @@ import characters.Enemy;
 import characters.Line;
 import characters.NumericDisplay;
 import characters.Player;
-import event.Metronome;
 import event.MetronomeListener;
 import io.ReadFile;
 import physics.Location;
 import utilities.Constants;
-import visual.Visualization;
 import visual.VisualizationView;
 import visual.dynamic.described.Stage;
 
+/**
+ * Main class for creating the application, handling user events, playing sounds
+ * and controlling the game.
+ * 
+ * @author Kevin Amrein and Affan Sheikh
+ *
+ */
 public class PossibleGameApp extends AbstractMultimediaApp implements KeyListener, MetronomeListener {
+
+	/* Constants */
 	private static final int ENEMY_COUNT = 4;
 	private static final int LIVES_X = 600;
 	private static final int LIVES_Y = 30;
@@ -40,6 +41,7 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 	private static final int STARTING_SCORE = 0;
 	private static final String SCORE_LABEL = "Score:";
 
+	/* Global Variables */
 	private JPanel contentPane;
 	private Player player;
 	private Stage visualization;
@@ -50,16 +52,20 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 	private int creationBuffer;
 	private NumericDisplay scoreDisplay, livesDisplay;
 
+	/**
+	 * Starts the background music and adds the EntryScreen to the content pane.
+	 */
+	@Override
 	public void init() {
 
 		constructClip("Music.wav", true);
 
-		contentPane = (JPanel) rootPaneContainer.getContentPane();
-		contentPane.setLayout(null);
+		this.contentPane = (JPanel) this.rootPaneContainer.getContentPane();
+		this.contentPane.setLayout(null);
 
-		entryscreen = new EntryScreen(this);
+		this.entryscreen = new EntryScreen(this);
 
-		contentPane.add(entryscreen);
+		this.contentPane.add(this.entryscreen);
 
 	}
 
@@ -82,78 +88,88 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 		clip.start();
 	}
 
+	/**
+	 * Creates ENEMY_COUNT enemies, the player, and the score and lives
+	 * displays.
+	 */
 	public void createGameElements() {
 		// Create Enemies
-		enemies = new ArrayList<Enemy>();
+		this.enemies = new ArrayList<Enemy>();
 		for (int i = 0; i < ENEMY_COUNT; i++) {
-			enemies.add(new Enemy());
+			this.enemies.add(new Enemy());
 		}
-		createdEnemyCounter = 0;
-		
-		creationBuffer = 0;
+		this.createdEnemyCounter = 0;
 
-		livesDisplay = new NumericDisplay(LIVES_LABEL, STARTING_LIVES, LIVES_X, LIVES_Y);
-		scoreDisplay = new NumericDisplay(SCORE_LABEL, STARTING_SCORE, SCORE_X, SCORE_Y);
+		this.creationBuffer = 0;
 
-		player = new Player(Constants.PLAYER_START_X, Constants.PLAYER_START_Y);
+		this.livesDisplay = new NumericDisplay(LIVES_LABEL, STARTING_LIVES, LIVES_X, LIVES_Y);
+		this.scoreDisplay = new NumericDisplay(SCORE_LABEL, STARTING_SCORE, SCORE_X, SCORE_Y);
 
-		player.changeColor(livesDisplay.getValue());
+		this.player = new Player(Constants.PLAYER_START_X, Constants.PLAYER_START_Y);
+
+		this.player.changeColor(this.livesDisplay.getValue());
 	}
 
+	/**
+	 * Removes all current components from the content pane and starts the game
+	 * visualization.
+	 */
 	public void playGame() {
-		contentPane.removeAll();
+		this.contentPane.removeAll();
 		// BackGround g = new BackGround(this);
 		// contentPane.add(g);
 		// contentPane.add(image);
 		// Metronome newMetronome = new Metronome(20);
-		visualization = new Stage(15);
+		this.visualization = new Stage(15);
 		// Visualization visualization = new Visualization();
 		// metronome = new Metronome(1400);
 
-		view = visualization.getView();
-		view.setBounds(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-		view.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+		this.view = this.visualization.getView();
+		this.view.setBounds(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+		this.view.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 		// view.add(g);
-		view.addKeyListener(this);
-		Line l = new Line();
+		this.view.addKeyListener(this);
 
-		visualization.add(l);
+		Line l = Line.getInstance();
+
+		this.visualization.add(l);
 
 		// metronome.addListener(this);
-		visualization.getMetronome().addListener(this);
+		this.visualization.getMetronome().addListener(this);
 		// newMetronome.addListener(enemy);
-		visualization.add(player);
+		this.visualization.add(this.player);
 
-		visualization.add(livesDisplay);
-		visualization.add(scoreDisplay);
+		this.visualization.add(this.livesDisplay);
+		this.visualization.add(this.scoreDisplay);
 		// contentPane.add(g);
-		contentPane.add(view);
+		this.contentPane.add(this.view);
 		// metronome.start();
-		visualization.start();
+		this.visualization.start();
 	}
 
+	/**
+	 * Removes all components from the content pane and displays the exit
+	 * screen.
+	 */
 	private void exit() {
-		contentPane.removeAll();
-		ExitScreen exitScreen = new ExitScreen(scoreDisplay.getValue(), this);
-		contentPane.add(exitScreen);
-		contentPane.repaint();
+		this.contentPane.removeAll();
+		ExitScreen exitScreen = new ExitScreen(this.scoreDisplay.getValue(), this);
+		this.contentPane.add(exitScreen);
+		this.contentPane.repaint();
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		/*
-		 * if (e.getKeyCode() == KeyEvent.VK_SPACE) { if (!player.isJumping()) {
-		 * player.startJumping(); } }
-		 */
+		return;
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			if (!player.isJumping()) {
-				player.startJumping();
-			} else if (player.isJumping() && !player.isDoubleJumping()) {
-				player.startDoubleJump();
+			if (!this.player.isJumping()) {
+				this.player.startJumping();
+			} else if (this.player.isJumping() && !this.player.isDoubleJumping()) {
+				this.player.startDoubleJump();
 			}
 		}
 
@@ -161,14 +177,19 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		/*
-		 * if (e.getKeyCode() == KeyEvent.VK_SPACE) { if (!player.isJumping()) {
-		 * player.startJumping(); } }
-		 */
+		return;
 	}
 
+	/**
+	 * Checks to see if the passed enemy hit the player on the side or on the
+	 * top.
+	 * 
+	 * @param enemy
+	 *            Enemy
+	 * @return true if hit
+	 */
 	private boolean hit(Enemy enemy) {
-		Location[] playerCoordinates = player.getCoordinates();
+		Location[] playerCoordinates = this.player.getCoordinates();
 		Location[] enemyCoordinates = enemy.getCoordinates();
 		return ((enemyCoordinates[0].getX() <= playerCoordinates[3].getX()
 				&& enemyCoordinates[0].getX() >= playerCoordinates[2].getX())
@@ -177,8 +198,15 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 				&& enemyCoordinates[1].getY() <= playerCoordinates[2].getY();
 	}
 
+	/**
+	 * Checks to see if the passed enemy passed the player without hitting it.
+	 * 
+	 * @param enemy
+	 *            Enemy
+	 * @return true if passed player
+	 */
 	private boolean survived(Enemy enemy) {
-		Location[] playerCoordinates = player.getCoordinates();
+		Location[] playerCoordinates = this.player.getCoordinates();
 		Location[] enemyCoordinates = enemy.getCoordinates();
 
 		return playerCoordinates[2].getX() > enemyCoordinates[2].getX();
@@ -186,28 +214,31 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 
 	@Override
 	public void handleTick(int arg0) {
-		if (createdEnemyCounter != ENEMY_COUNT) {
-			creationBuffer++;
-			if (creationBuffer == 50 || creationBuffer % 300 == 0) {
-				visualization.add(enemies.get(createdEnemyCounter));
-				createdEnemyCounter++;
+		// Buffer the creation of enemies at start of game
+		if (this.createdEnemyCounter != ENEMY_COUNT) {
+			this.creationBuffer++;
+			if (this.creationBuffer == 50 || this.creationBuffer % 300 == 0) {
+				this.visualization.add(this.enemies.get(this.createdEnemyCounter));
+				this.createdEnemyCounter++;
 			}
 		}
 
-		for (Enemy e : enemies) {
+		// For every tick check if the enemies hit or survived
+		for (Enemy e : this.enemies) {
 			if (!e.isDestroyed() && hit(e)) {
 				e.destroy();
-				if (livesDisplay.getValue() > 0)
+				if (this.livesDisplay.getValue() > 0)
 					constructClip("hit.wav", false);
-				livesDisplay.decrement();
-				player.changeColor(livesDisplay.getValue());
+				this.livesDisplay.decrement();
+				this.player.changeColor(this.livesDisplay.getValue());
 			} else if (!e.isDestroyed() && survived(e) && !e.getSurvived()) {
-				scoreDisplay.increment();
+				this.scoreDisplay.increment();
 				e.survived();
 			}
 		}
 
-		if (livesDisplay.getValue() == 0) {
+		// Game over
+		if (this.livesDisplay.getValue() == 0) {
 			exit();
 		}
 	}

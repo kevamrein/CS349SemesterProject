@@ -10,13 +10,11 @@ import app.MultimediaApplet;
  * @author Kevin Amrein and Affan Sheikh
  *
  */
-public class PossibleGameApplet extends MultimediaApplet
-{
-  /**
-   * Creates the MovieApplet using the MovieApp.
-   */
-  public PossibleGameApplet()
-  {
-    super(new PossibleGameApp());
-  }
+public class PossibleGameApplet extends MultimediaApplet {
+	/**
+	 * Creates the MovieApplet using the MovieApp.
+	 */
+	public PossibleGameApplet() {
+		super(new PossibleGameApp());
+	}
 }
