@@ -30,7 +30,7 @@ import visual.VisualizationView;
 import visual.dynamic.described.Stage;
 
 public class PossibleGameApp extends AbstractMultimediaApp implements KeyListener, MetronomeListener {
-	private static final int ENEMY_COUNT = 5;
+	private static final int ENEMY_COUNT = 4;
 	private static final int LIVES_X = 600;
 	private static final int LIVES_Y = 30;
 	private static final int STARTING_LIVES = 3;
