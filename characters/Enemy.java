@@ -100,6 +100,7 @@ public class Enemy extends Character {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setColor(Color.black);
 			g2.drawPolygon(this.triangle);
+			//g2.fillPolygon(this.triangle);
 		}
 	}
 

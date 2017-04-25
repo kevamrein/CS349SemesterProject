@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -66,7 +67,6 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 		this.entryscreen = new EntryScreen(this);
 
 		this.contentPane.add(this.entryscreen);
-
 	}
 
 	/**
@@ -116,34 +116,25 @@ public class PossibleGameApp extends AbstractMultimediaApp implements KeyListene
 	 */
 	public void playGame() {
 		this.contentPane.removeAll();
-		// BackGround g = new BackGround(this);
-		// contentPane.add(g);
-		// contentPane.add(image);
-		// Metronome newMetronome = new Metronome(20);
-		this.visualization = new Stage(15);
-		// Visualization visualization = new Visualization();
-		// metronome = new Metronome(1400);
 
+		this.visualization = new Stage(15);
+		
 		this.view = this.visualization.getView();
+		view.setBackground(new Color(242, 239, 240));
 		this.view.setBounds(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 		this.view.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-		// view.add(g);
 		this.view.addKeyListener(this);
 
 		Line l = Line.getInstance();
 
 		this.visualization.add(l);
 
-		// metronome.addListener(this);
 		this.visualization.getMetronome().addListener(this);
-		// newMetronome.addListener(enemy);
 		this.visualization.add(this.player);
 
 		this.visualization.add(this.livesDisplay);
 		this.visualization.add(this.scoreDisplay);
-		// contentPane.add(g);
 		this.contentPane.add(this.view);
-		// metronome.start();
 		this.visualization.start();
 	}
 
