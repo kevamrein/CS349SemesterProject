@@ -1,4 +1,4 @@
-package Title;
+package title;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -23,76 +23,80 @@ import io.ReadFile;
  * @author Kevin Amrein and Affan Sheikh
  *
  */
-public class EntryScreen extends JPanel implements ActionListener {
+public class EntryScreen extends JPanel implements ActionListener
+{
 
-	private JButton button;
-	private JLabel label;
-	private ReadFile reader;
-	private BufferedImage image = null;
-	private PossibleGameApp app;
+  private JButton button;
+  private JLabel label;
+  private ReadFile reader;
+  private BufferedImage image = null;
+  private PossibleGameApp app;
 
-	/**
-	 * Explicit value constructor responsible for constructing the EntryScreen
-	 * 
-	 * @param app
-	 *            the instance of the current app.
-	 */
+  /**
+   * Explicit value constructor responsible for constructing the EntryScreen
+   * 
+   * @param app
+   *          the instance of the current app.
+   */
 
-	public EntryScreen(AbstractMultimediaApp app) {
-		super();
+  public EntryScreen(AbstractMultimediaApp app)
+  {
+    super();
 
-		this.app = (PossibleGameApp) app;
+    this.app = (PossibleGameApp) app;
 
-		setBounds(0, 0, 800, 400);
+    setBounds(0, 0, 800, 400);
 
-		this.reader = new ReadFile();
-		this.image = this.reader.getImage("Title.png");
+    this.reader = new ReadFile();
+    this.image = this.reader.getImage("Title.png");
 
-		this.button = new JButton("Start Game");
-		this.button.addActionListener(this);
-		this.button.setBounds(300, 275, 200, 75);
+    this.button = new JButton("Start Game");
+    this.button.addActionListener(this);
+    this.button.setBounds(300, 275, 200, 75);
 
-		this.label = new JLabel("POSSIBLE GAME");
-		this.label.setBounds(275, 0, 300, 300);
+    this.label = new JLabel("POSSIBLE GAME");
+    this.label.setBounds(275, 0, 300, 300);
 
-		this.label.setFont(new Font("Serif", Font.ITALIC, 32));
-		this.label.setForeground(Color.WHITE);
+    this.label.setFont(new Font("Serif", Font.ITALIC, 32));
+    this.label.setForeground(Color.WHITE);
 
-		this.button.setOpaque(false);
-		this.button.setContentAreaFilled(false);
-		this.button.setBorderPainted(true);
-		this.button.setForeground(Color.WHITE);
-		this.button.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+    this.button.setOpaque(false);
+    this.button.setContentAreaFilled(false);
+    this.button.setBorderPainted(true);
+    this.button.setForeground(Color.WHITE);
+    this.button.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
 
-	}
+  }
 
-	@Override
-	/**
-	 * Renders the EntryScreen
-	 * 
-	 * @param g
-	 *            The graphics object
-	 */
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
+  @Override
+  /**
+   * Renders the EntryScreen
+   * 
+   * @param g
+   *          The graphics object
+   */
+  public void paintComponent(Graphics g)
+  {
+    super.paintComponent(g);
+    Graphics2D g2 = (Graphics2D) g;
 
-		add(this.button);
-		add(this.label);
-		g2.drawImage(this.image, 0, 0, getWidth(), getHeight(), this);
+    add(this.button);
+    add(this.label);
+    g2.drawImage(this.image, 0, 0, getWidth(), getHeight(), this);
 
-	}
+  }
 
-	/**
-	 * Responsible for handling all the events invoked by the user
-	 * 
-	 * @param e
-	 *            The ActionEvent invoked
-	 */
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		this.app.createGameElements();
-		this.app.playGame();
-	}
+  /**
+   * Responsible for handling all the events invoked by the user
+   * 
+   * @param e
+   *          The ActionEvent invoked
+   */
+  @Override
+  public void actionPerformed(ActionEvent e)
+  {
+    // TODO Auto-generated method stub
+    this.app.createGameElements();
+    this.app.playGame();
+  }
 }
